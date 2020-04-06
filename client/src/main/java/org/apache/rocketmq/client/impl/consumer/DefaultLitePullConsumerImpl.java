@@ -996,19 +996,21 @@ public class DefaultLitePullConsumerImpl implements MQConsumerInner {
             return true;
         }
 
-        if (set1 == null || set2 == null || set1.size() != set2.size()
-            || set1.size() == 0 || set2.size() == 0) {
+        if (set1 == null || set2 == null || set1.size() != set2.size()) {
             return false;
+        }
+        
+        if (set1.size() == 0 && set2.size() == 0) {
+            return true;
         }
 
         Iterator iter = set2.iterator();
-        boolean isEqual = true;
         while (iter.hasNext()) {
             if (!set1.contains(iter.next())) {
-                isEqual = false;
+                return false;
             }
         }
-        return isEqual;
+        return true;
     }
 
     public synchronized void registerTopicMessageQueueChangeListener(String topic,
